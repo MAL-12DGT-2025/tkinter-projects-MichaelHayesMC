@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-def convert():
+def convert(event):
     num=int(number.get())
 
     if int(con_var.get()) == 1: # Celsius to Farenheit
@@ -14,7 +14,7 @@ def convert():
 
 
 root = tk.Tk()
-con_var = tk.IntVar()
+con_var = tk.IntVar(value = 1)
 
 window_name = root.title("Temperature Converter")
 
@@ -35,5 +35,7 @@ convert_butt.grid(row=3, column=0, columnspan=2)
 
 result_l = ttk.Label(root, text="")
 result_l.grid(row=4, column=0, columnspan=2)
+
+root.bind("<Return>", convert)
 
 root.mainloop()

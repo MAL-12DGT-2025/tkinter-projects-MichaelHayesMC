@@ -2,7 +2,16 @@ import tkinter as tk
 from tkinter import ttk
 
 def convert():
-    result_1.config(text=str(number.get()))
+    num=int(number.get())
+
+    if int(con_var.get()) == 1: # Celsius to Farenheit
+        result = (num * 9/5) + 32
+        result_l.config(text=f"{num}°C is equal to {result:.0f}°F")
+
+    elif int(con_var.get()) == 2: # Farenheit to Celsius:
+        result = (num - 32) * 5/9
+        result_l.config(text=f"{num}°F is equal to {result:.0f}°C")
+
 
 root = tk.Tk()
 con_var = tk.IntVar()
@@ -24,7 +33,7 @@ f_c_rad.grid(row=2, column=1)
 convert_butt = ttk.Button(root, text="Convert", command=convert)
 convert_butt.grid(row=3, column=0, columnspan=2)
 
-result_1 = ttk.Label(root, text="")
-result_1.grid(row=4, column=0, columnspan=2)
+result_l = ttk.Label(root, text="")
+result_l.grid(row=4, column=0, columnspan=2)
 
 root.mainloop()

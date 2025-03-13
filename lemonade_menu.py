@@ -1,8 +1,19 @@
 import tkinter as tk
 from tkinter import ttk
 
+lemon_price = 1.50
+icecube_price = 0.50
+lemonade_price = 2.00
+
+def price_calc(i):
+    amount = float(count.get())
+    print(float(amount))
+    price1.config(text=f"${amount*lemon_price: .2f}")
+
 root = tk.Tk()
 root.title("Lemonade Stand Menu")
+
+count = tk.IntVar()
 
 title = ttk.Label(root, text="Lemonade Stand Menu")
 title.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
@@ -46,8 +57,9 @@ item2.grid(row=3, column=2, padx=5)
 item3 = ttk.Label(root, text="250ml Lemonade")
 item3.grid(row=4, column=2, padx=5)
 
-quantity1 = ttk.Entry(root, width=5)
+quantity1 = ttk.Entry(root, width=5, textvariable=count)
 quantity1.grid(row=2, column=1, padx=5)
+quantity1.bind("<Return>", price_calc)
 
 quantity2 = ttk.Entry(root, width=5)
 quantity2.grid(row=3, column=1, padx=5)

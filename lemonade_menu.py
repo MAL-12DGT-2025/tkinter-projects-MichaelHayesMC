@@ -1,3 +1,4 @@
+# Initalising Tkinter GUI for Lemonade Stand Menu
 import tkinter as tk
 from tkinter import ttk
 

@@ -3,11 +3,10 @@ from tkinter import ttk
 
 def button_push():
     bible_verse = input_entry.get()
-    print(bible_verse)
-    bible_verse_label.config(text=bible_verse)
     with open("bible_verse.txt", "w") as file:
         file.write(bible_verse)
-
+    with open("bible_verse.txt", "r") as file:
+        bible_verse_label.config(text=file.read())
 
 root = tk.Tk()
 root.title("Bible Verse Text Reader")

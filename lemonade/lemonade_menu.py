@@ -2,11 +2,6 @@
 import tkinter as tk
 from tkinter import ttk
 
-# Initialisng Item Prices
-lemon_price = "1.50"
-icecube_price = "0.50"
-lemonade_price = "2.00"
-
 # Calculate 50g lemon prices per amount
 def lemons(i):
     amount = (count.get())
@@ -56,6 +51,11 @@ def fpurchase():
     if check3.get() <= 0:
         result += eval(f"-{amount3}*{lemonade_price}")
     purchase_L.config(text=f"${result}0")
+
+# Initialisng Item Prices
+lemon_price = "1.50"
+icecube_price = "0.50"
+lemonade_price = "2.00"
 
 # Initialise Lemonade Stand Window Menu
 root = tk.Tk()

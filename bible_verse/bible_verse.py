@@ -11,7 +11,7 @@ def button_push():
         bible_verse_label.config(text=file.read())
 
 # Refer txt file as textfile variable
-textfile = "story/bible_verse.txt"
+textfile = "bible_verse/bible_verse.txt"
 
 # Initialise Bible Verse text reader Window Menu
 root = tk.Tk()

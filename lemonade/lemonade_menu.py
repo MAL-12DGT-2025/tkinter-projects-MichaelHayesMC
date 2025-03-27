@@ -143,9 +143,6 @@ check5 = tk.IntVar()
 check6 = tk.IntVar()
 check7 = tk.IntVar()
 
-# Test
-idk = tk.StringVar()
-
 # Intialise title
 title = ttk.Label(root, text="Lemonade Stand Menu")
 title.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
@@ -156,23 +153,23 @@ price_L.grid(row=1, column=3, pady=5)
 item_L = ttk.Label(root, text="Item")
 item_L.grid(row=1, column=2, pady=5)
 amount_L = ttk.Label(root, text="Amount")
-amount_L.grid(row=1, column=0, pady=5, columnspan=2)
+amount_L.grid(row=1, column=0, pady=5, columnspan=2, padx=20)
 
 # Initialise checkboxes for each item
 selected_1 = ttk.Checkbutton(root, variable=check1, onvalue=1, offvalue=0, command=lambda:lemons(1))
-selected_1.grid(row=2, column=0, sticky="e")
+selected_1.grid(row=2, column=0)
 selected_2 = ttk.Checkbutton(root, variable=check2, onvalue=1, offvalue=0, command=lambda:ice(1))
-selected_2.grid(row=3, column=0, sticky="e")
+selected_2.grid(row=3, column=0)
 selected_3 = ttk.Checkbutton(root, variable=check3, onvalue=1, offvalue=0, command=lambda:lemonade(1))
-selected_3.grid(row=4, column=0, sticky="e")
+selected_3.grid(row=4, column=0)
 selected_4 = ttk.Checkbutton(root, variable=check4, onvalue=1, offvalue=0, command=lambda:mango_lemonade(1))
-selected_4.grid(row=5, column=0, sticky="e")
+selected_4.grid(row=5, column=0)
 selected_5 = ttk.Checkbutton(root, variable=check5, onvalue=1, offvalue=0, command=lambda:strawberry_lemonade(1))
-selected_5.grid(row=6, column=0, sticky="e")
+selected_5.grid(row=6, column=0)
 selected_6 = ttk.Checkbutton(root, variable=check6, onvalue=1, offvalue=0, command=lambda:blueberry_lemonade(1))
-selected_6.grid(row=7, column=0, sticky="e")
+selected_6.grid(row=7, column=0)
 selected_7 = ttk.Checkbutton(root, variable=check7, onvalue=1, offvalue=0, command=lambda:raspberry_lemonade(1))
-selected_7.grid(row=8, column=0, sticky="e", padx=10)
+selected_7.grid(row=8, column=0)
 
 # Initialise prices for each item
 price1 = ttk.Label(root, text=f"${lemon_price}")
@@ -191,10 +188,6 @@ price7 = ttk.Label(root, text=f"${raspberry_lemonade_price}")
 price7.grid(row=8, column=3, padx=10)
 
 # Initialise items
-millilitres = ["250ml", 
-               "500ml", 
-               "1L"]
-
 item1 = ttk.Label(root, text="50g Lemons")
 item1.grid(row=2, column=2, padx=5, sticky="w")
 item2 = ttk.Label(root, text="Ice Cubes")
@@ -209,9 +202,6 @@ item6 = ttk.Label(root, text="250ml Blueberry Lemonade")
 item6.grid(row=7, column=2, padx=5, sticky="w")
 item7 = ttk.Label(root, text="250ml Raspberry Lemonade")
 item7.grid(row=8, column=2, padx=5, sticky="w")
-
-millilitre = ttk.Combobox(root, values=millilitres, state="readonly")
-millilitre.grid(row=4, column=2, sticky="w")
 
 # Initialise entries(amount) for each item
 quantity1 = ttk.Entry(root, width=5, textvariable=count)

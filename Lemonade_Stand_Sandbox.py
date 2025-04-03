@@ -151,8 +151,8 @@ def amount(item, price):
 
     def confirm(item, price, amount):
         global total_cart
-        label = ttk.Label(cart_canvas, text=(f"{amount}x {item} ${price}0"), background="White")
-        label.pack(side="top", anchor="nw")
+        label = ttk.Label(cart_canvas_frame, text=(f"{amount}x {item} ${price}0"))
+        label.pack(pady=2, anchor="nw")
         total_cart += price
         purchase_cart_button.config(text=f"Purchase ${total_cart}0")
         amount_main_frame.destroy()
@@ -174,37 +174,51 @@ cart_frame = tk.LabelFrame(main_frame, text="Cart", height=300, width=180)
 cart_frame.grid(row=0, column=3, rowspan=6, sticky="n")
 cart_frame.pack_propagate(False)
 
-cart_canvas = tk.Canvas(cart_frame, background="White")
+cart_canvas = tk.Canvas(cart_frame)
 cart_canvas.pack(expand=True, fill="both")
 
+cart_canvas_frame = tk.Frame(cart_canvas)
+cart_canvas.create_window(0, 0, window=cart_canvas_frame, anchor="nw")
+
 # Clear Cart
-clear_cart_button = ttk.Button(main_frame, text="Clear Cart")
+def clear():
+    global total_cart
+    for widget in cart_canvas_frame.winfo_children():
+        widget.destroy()
+    total_cart = 0
+    purchase_cart_button.config(text=f"Purchase $0.00")
+
+clear_cart_button = ttk.Button(main_frame, text="Clear Cart", command=clear)
 clear_cart_button.grid(row=6, column=3, sticky="nsew")  
 
 # Purchase items
 def purchase():
-    messagebox.showinfo("Puchase", "Thank you for your purchase")
+    if total_cart != 0:
+        messagebox.showinfo("Purchase", "Thank you for your purchase")
+        clear()
+    else:
+        messagebox.showerror("ERROR", "Please select an item to purchase")
 
 purchase_cart_button = ttk.Button(main_frame, text="Purchase $0.00", padding=10, width=26, command=purchase)
 purchase_cart_button.grid(row=7, column=3, sticky="nsew")
 
 # Item Buttons
-lemons_button = ttk.Button(item_select_frame, text="Lemon \n$1.00", padding=40, width=6)
+lemons_button = ttk.Button(item_select_frame, text="Lemon \n$1.00", padding=40, width=6, command=lambda: amount("Lemon", prices.lemon))
 lemons_button.grid(row=0, column=0, sticky="nsew")
 
 classic_lemonade_button = ttk.Button(item_select_frame, text="Lemonade \n$2.00", width=20, padding=(0, 50), command=lambda: lemonade_customisation("Classic Lemonade", prices.classic_lemonade))
 classic_lemonade_button.grid(row=0, column=1, sticky="nsew")
 
-mango_lemonade_button = ttk.Button(item_select_frame, text="Mango Lemonade \n$2.50")
+mango_lemonade_button = ttk.Button(item_select_frame, text="Mango Lemonade \n$2.50", command=lambda: lemonade_customisation("Mango Lemonade", prices.mango_lemonade))
 mango_lemonade_button.grid(row=0, column=2, sticky="nsew")
 
-strawberry_lemonade_button = ttk.Button(item_select_frame, text="Strawberry \nLemonade \n$2.50", width=6)
+strawberry_lemonade_button = ttk.Button(item_select_frame, text="Strawberry \nLemonade \n$2.50", width=6, command=lambda: lemonade_customisation("Strawberry Lemonade", prices.strawberry_lemonade))
 strawberry_lemonade_button.grid(row=1, column=0, sticky="nsew")
 
-blueberry_lemonade_button = ttk.Button(item_select_frame, text="Blueberry \nLemonade \n$2.50", width=20)
+blueberry_lemonade_button = ttk.Button(item_select_frame, text="Blueberry \nLemonade \n$2.50", width=20, command=lambda: lemonade_customisation("Blueberry Lemonade", prices.blueberry_lemonade))
 blueberry_lemonade_button.grid(row=1, column=1, sticky="nsew")
 
-raspberry_lemonade_button = ttk.Button(item_select_frame, text="Raspberry \nLemonade \n$2.50", width=19, padding=(0, 40))
+raspberry_lemonade_button = ttk.Button(item_select_frame, text="Raspberry \nLemonade \n$2.50", width=19, padding=(0, 40), command=lambda: lemonade_customisation("Raspberry Lemonade", prices.raspberry_lemonade))
 raspberry_lemonade_button.grid(row=1, column=2, sticky="nsew")
 
 # Initalise Widgets

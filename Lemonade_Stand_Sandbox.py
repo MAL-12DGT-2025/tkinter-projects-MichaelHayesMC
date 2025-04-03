@@ -120,11 +120,10 @@ def lemonade_customisation(flavour, price):
     pop_price_label.grid(row=4, column=0, columnspan=2, sticky="s", pady=5)
 
     # Confirm Button
-    pop_button = ttk.Button(pop_frame, text="Confirm", command = lambda: (amount(flavour, size_lemonade+condiments+price)))
+    pop_button = ttk.Button(pop_frame, text="Confirm", command = lambda: (amount(flavour, size_lemonade+condiments+price), pop.destroy()))
     pop_button.grid(row=5, column=0, columnspan=2)
 
 def amount(item, price):
-    pop.destroy()
     global amount_main_frame
     amount_main_frame = tk.Toplevel(root)
     amount_main_frame.title("Popup")

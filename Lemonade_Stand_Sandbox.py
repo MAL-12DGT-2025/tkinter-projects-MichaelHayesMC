@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk 
 from tkinter import messagebox
 
+total_cart = 0
+
 root = tk.Tk()
 root.title("Lemonade Stand Menu")
 root.geometry("600x420")
@@ -122,7 +124,6 @@ def lemonade_customisation(flavour, price):
     pop_button.grid(row=5, column=0, columnspan=2)
 
 def amount(item, price):
-    print(item , price)
     pop.destroy()
     global amount_main_frame
     amount_main_frame = tk.Toplevel(root)
@@ -136,39 +137,56 @@ def amount(item, price):
     desired_amount = ttk.Label(amount_frame, text="Choose desired amount")
     desired_amount.grid(row=0, column=0, sticky="nsew")
 
+    def price_change():
+        spinbox = amount_input.get()
+        amount_price_label.config(text=f"${price*float(spinbox)}0")
+
     global amount_input_num
     amount_input_num = tk.IntVar(value=1)
-    amount_input = ttk.Spinbox(amount_frame, width=10, from_=1, to=100, increment=1, textvariable=amount_input_num)
+    amount_input = ttk.Spinbox(amount_frame, width=10, from_=1, to=100, increment=1, textvariable=amount_input_num, command=price_change, state="readonly")
     amount_input.grid(row=1, column=0, pady=10)
 
-    def confirm(item, price, amount):
-        print(item, price*amount, amount)
+    amount_price_label = ttk.Label(amount_frame, text=f"${price}0")
+    amount_price_label.grid(row=2, column=0)
 
+    def confirm(item, price, amount):
+        global total_cart
+        label = ttk.Label(cart_canvas, text=(f"{amount}x {item} ${price}0"), background="White")
+        label.pack(side="top", anchor="nw")
+        total_cart += price
+        purchase_cart_button.config(text=f"Purchase ${total_cart}0")
         amount_main_frame.destroy()
 
-    confirm_amount = ttk.Button(amount_frame, text="Confirm", command=lambda: (confirm(item, price, amount_input_num.get())))
-    confirm_amount.grid(row=2, column=0, pady=10)
+    confirm_amount = ttk.Button(amount_frame, text="Confirm", command=lambda: (confirm(item, price*amount_input_num.get(), amount_input_num.get())))
+    confirm_amount.grid(row=3, column=0, pady=10)
 
-
+# Main Frame of Tkinter Window
 main_frame = tk.Frame(root, height=500, width=800)
 main_frame.pack(padx=10, pady=10)
 
-
+# Menu Frame of items to purchase
 item_select_frame = tk.LabelFrame(main_frame, text="Select Item", height=400, width=395, padx=10)
 item_select_frame.grid(row=0, column=0, columnspan=3, rowspan=8, sticky="n")
 item_select_frame.grid_propagate(False)
 
-
+# Cart Frame for purchasing items
 cart_frame = tk.LabelFrame(main_frame, text="Cart", height=300, width=180)
 cart_frame.grid(row=0, column=3, rowspan=6, sticky="n")
 cart_frame.pack_propagate(False)
 
+cart_canvas = tk.Canvas(cart_frame, background="White")
+cart_canvas.pack(expand=True, fill="both")
+
+# Clear Cart
 clear_cart_button = ttk.Button(main_frame, text="Clear Cart")
 clear_cart_button.grid(row=6, column=3, sticky="nsew")  
 
-purchase_cart_button = ttk.Button(main_frame, text="Purchase $0.00", padding=10, width=26)
-purchase_cart_button.grid(row=7, column=3, sticky="nsew")
+# Purchase items
+def purchase():
+    messagebox.showinfo("Puchase", "Thank you for your purchase")
 
+purchase_cart_button = ttk.Button(main_frame, text="Purchase $0.00", padding=10, width=26, command=purchase)
+purchase_cart_button.grid(row=7, column=3, sticky="nsew")
 
 # Item Buttons
 lemons_button = ttk.Button(item_select_frame, text="Lemon \n$1.00", padding=40, width=6)

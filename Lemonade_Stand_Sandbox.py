@@ -23,6 +23,7 @@ class prices:
 def lemonade_customisation(flavour, price):
     size_lemonade = 0
     condiments = 0
+    total = size_lemonade+condiments+price
     # Initalise Popup Window
     global pop
     pop = tk.Toplevel(root)
@@ -30,16 +31,17 @@ def lemonade_customisation(flavour, price):
     pop.resizable(False, False)
     pop.grab_set()
 
-    pop_frame = tk.Frame(pop, height=200, width=300)
+    pop_frame = tk.Frame(pop, height=237, width=390)
     pop_frame.pack(padx=10, pady=10)
 
     # Size Values
-    size_frame = tk.LabelFrame(pop_frame, height=100, width=100, text="Size")
+    size_frame = tk.LabelFrame(pop_frame, height=110, width=190, text="Size")
     size_frame.grid(row=0, column=0, sticky="nsew")
     size_frame.grid_propagate(False)
 
     def radio():
         nonlocal size_lemonade
+        nonlocal total
         portion = size.get()
 
         if portion == 1:
@@ -48,25 +50,35 @@ def lemonade_customisation(flavour, price):
             size_lemonade = prices.ml500
         elif portion == 3:
             size_lemonade = prices.L1
+        price_change_popup()
 
     global size
     size = tk.IntVar(value=1)
     ml250 = ttk.Radiobutton(size_frame, text="250ml", value=1, variable=size, command=lambda: radio())
     ml250.grid(row=0, column=0, sticky="nsew")
+    dash_250_label = ttk.Label(size_frame, text="")
+    dash_250_label.grid(column=1, row=0, padx=42)
+    price_250_label = ttk.Label(size_frame, text="+$0.00")
+    price_250_label.grid(column=2, row=0, sticky="w")
 
     ml500 = ttk.Radiobutton(size_frame, text="500ml", value=2, variable=size, command=lambda: radio())
     ml500.grid(row=1, column=0, sticky="nsew")
+    price_500_label = ttk.Label(size_frame, text="+$2.00")
+    price_500_label.grid(column=2, row=1, sticky="w")
 
     L1 = ttk.Radiobutton(size_frame, text="1L", value=3, variable=size, command=lambda: radio())
     L1.grid(row=2, column=0, sticky="nsew")
+    price_1_label = ttk.Label(size_frame, text="+$4.00")
+    price_1_label.grid(column=2, row=2, sticky="w")
     
     # Condiments Values
-    condiments_frame = tk.LabelFrame(pop_frame, height=100, width=100, text="Condiments")
+    condiments_frame = tk.LabelFrame(pop_frame, height=110, width=190, text="Condiments")
     condiments_frame.grid(row=0, column=1, sticky="nsew")
     condiments_frame.grid_propagate(False)
 
     def box(item):
         nonlocal condiments
+        nonlocal total
         if item == "ice":
             if icebool.get():
                 condiments += prices.ice
@@ -78,20 +90,36 @@ def lemonade_customisation(flavour, price):
                 condiments += prices.ice
             elif sugarbool.get() == False:
                 condiments -= prices.ice
+    
+        price_change_popup()
 
     global icebool
     icebool = tk.BooleanVar(value=False)
     ice = ttk.Checkbutton(condiments_frame, text="Ice", variable=icebool, onvalue=True, offvalue=False, command=lambda:box("ice"))
     ice.grid(row=0, column=0, sticky="nsew")
+    dash_ice_label = ttk.Label(condiments_frame, text="")
+    dash_ice_label.grid(column=1, row=0, padx=28)
+    price_ice_label = ttk.Label(condiments_frame, text="+$0.50")
+    price_ice_label.grid(column=2, row=0, sticky="w")
 
     global sugarbool
     sugarbool = tk.BooleanVar(value=False)
     extra_sugar = ttk.Checkbutton(condiments_frame, text="Extra Sugar", variable=sugarbool, onvalue=True, offvalue=False, command=lambda:box("sugar"))
     extra_sugar.grid(row=1, column=0, sticky="nsew")
+    price_ice_label = ttk.Label(condiments_frame, text="+$0.50")
+    price_ice_label.grid(column=2, row=1, sticky="w")
+
+    # Price Display Lemonade Customisation Popup
+    def price_change_popup():
+        total = size_lemonade+condiments+price
+        pop_price_label.config(text=f"${total}0")
+
+    pop_price_label = ttk.Label(pop_frame, text=f"${total}0")
+    pop_price_label.grid(row=4, column=0, columnspan=2, sticky="s", pady=5)
 
     # Confirm Button
     pop_button = ttk.Button(pop_frame, text="Confirm", command = lambda: (amount(flavour, size_lemonade+condiments+price)))
-    pop_button.grid(row=4, column=0, columnspan=2, pady=10)
+    pop_button.grid(row=5, column=0, columnspan=2)
 
 def amount(item, price):
     print(item , price)
@@ -122,7 +150,6 @@ def amount(item, price):
     confirm_amount.grid(row=2, column=0, pady=10)
 
 
-
 main_frame = tk.Frame(root, height=500, width=800)
 main_frame.pack(padx=10, pady=10)
 
@@ -150,7 +177,7 @@ lemons_button.grid(row=0, column=0, sticky="nsew")
 classic_lemonade_button = ttk.Button(item_select_frame, text="Lemonade \n$2.00", width=20, padding=(0, 50), command=lambda: lemonade_customisation("Classic Lemonade", prices.classic_lemonade))
 classic_lemonade_button.grid(row=0, column=1, sticky="nsew")
 
-mango_lemonade_button = ttk.Button(item_select_frame, text="Mango Lemonade \n$2.50", padding=0)
+mango_lemonade_button = ttk.Button(item_select_frame, text="Mango Lemonade \n$2.50")
 mango_lemonade_button.grid(row=0, column=2, sticky="nsew")
 
 strawberry_lemonade_button = ttk.Button(item_select_frame, text="Strawberry \nLemonade \n$2.50", width=6)

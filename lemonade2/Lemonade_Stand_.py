@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk 
-from tkinter import messagebox
+from tkinter import messagebox 
 
 total_cart = 0
 
@@ -208,7 +208,7 @@ lemons_button.grid(row=0, column=0, sticky="nsew")
 classic_lemonade_button = ttk.Button(item_select_frame, text="Lemonade \n$2.00", width=20, padding=(0, 50), command=lambda: lemonade_customisation("Classic Lemonade", prices.classic_lemonade))
 classic_lemonade_button.grid(row=0, column=1, sticky="nsew")
 
-mango_lemonade_button = ttk.Button(item_select_frame, text="Mango Lemonade \n$2.50", command=lambda: lemonade_customisation("Mango Lemonade", prices.mango_lemonade))
+mango_lemonade_button = ttk.Button(item_select_frame, text="Mango \nLemonade \n$2.50", command=lambda: lemonade_customisation("Mango Lemonade", prices.mango_lemonade))
 mango_lemonade_button.grid(row=0, column=2, sticky="nsew")
 
 strawberry_lemonade_button = ttk.Button(item_select_frame, text="Strawberry \nLemonade \n$2.50", width=6, command=lambda: lemonade_customisation("Strawberry Lemonade", prices.strawberry_lemonade))
